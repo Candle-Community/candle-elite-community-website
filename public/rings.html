@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Candle Community Rings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0e1420;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 860px;
+      background: #111827;
+      border-radius: 24px;
+      padding: 44px 52px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient glow top-right */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(245,197,24,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    /* Ambient glow bottom-left */
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(30,100,150,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Title */
+    .title-row {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .title-row .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #f5c518;
+      margin-bottom: 8px;
+    }
+    .title-row h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #f9fafb;
+      letter-spacing: -0.5px;
+    }
+    .title-row h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #f5c518, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .title-row .subtitle {
+      font-size: 14px;
+      color: #4b5563;
+      margin-top: 6px;
+      font-weight: 400;
+    }
+
+    /* Pyramid SVG wrapper */
+    .pyramid-wrap {
+      position: relative;
+    }
+    svg { display: block; width: 100%; }
+
+    /* Whale row */
+    .whale-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+      padding: 11px 20px;
+      border: 1px dashed #1e3a5f;
+      border-radius: 50px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(30,58,95,0.15);
+    }
+    .whale-row span {
+      font-size: 13px;
+      color: #60a5fa;
+      font-weight: 500;
+    }
+    .whale-row .dot {
+      width: 4px; height: 4px;
+      background: #2a4a6a;
+      border-radius: 50%;
+    }
+    .whale-row .qualifier {
+      font-size: 12px;
+      color: #374151;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #1f2937;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer .logo {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f5c518, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      color: #000;
+    }
+    .footer .brand-name {
+      font-size: 13px;
+      color: #374151;
+      font-weight: 600;
+    }
+    .footer .tagline {
+      font-size: 12px;
+      color: #1f2937;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <div class="title-row">
+    <div class="eyebrow">🕯️ &nbsp; Community Structure</div>
+    <h1>Candle <em>Elite</em> — The 5 Rings</h1>
+    <div class="subtitle">The closer to the center, the more exclusive the access.</div>
+  </div>
+
+  <div class="pyramid-wrap">
+    <!--
+      viewBox: 0 0 760 470
+      Apex (Elite top edge): x=340→420, y=14  (80px wide)
+      Base (General bottom):  x=50→710,  y=454 (660px wide)
+      Height span: 454−14 = 440px  →  5 layers × 84px + 4×4px gaps = 436px ≈ ok
+
+      half-width(y) = 40 + (y−14)/440 × 290
+
+      Layers (top=Elite, bottom=General):
+        Elite:    y=14→96    gap↓ y=100
+        Believer: y=100→182  gap↓ y=186
+        Holder:   y=186→268  gap↓ y=272
+        Verified: y=272→354  gap↓ y=358
+        General:  y=358→454
+
+      hw(14)  = 40              → Elite top:    x=360,420
+      hw(96)  = 40+82/440×290  = 40+54.1 = 94  → Elite bot:    x=286,474
+      hw(100) = 40+86/440×290  = 40+56.7 = 97  → Believer top: x=283,477
+      hw(182) = 40+168/440×290 = 40+110.7= 151 → Believer bot: x=229,531
+      hw(186) = 40+172/440×290 = 40+113.4= 153 → Holder top:   x=227,533
+      hw(268) = 40+254/440×290 = 40+167.5= 208 → Holder bot:   x=172,588
+      hw(272) = 40+258/440×290 = 40+170.1= 210 → Verified top: x=170,590
+      hw(354) = 40+340/440×290 = 40+224.1= 264 → Verified bot: x=116,644
+      hw(358) = 40+344/440×290 = 40+226.8= 267 → General top:  x=113,647
+      hw(454) = 40+440/440×290 = 40+290  = 330 → General bot:  x=50, 710
+    -->
+    <svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Per-layer gradient: lighter at top of polygon, slightly darker at bottom -->
+        <linearGradient id="gElite" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fde047"/>
+          <stop offset="100%" stop-color="#ca9a00"/>
+        </linearGradient>
+        <linearGradient id="gBeliever" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b57a1e"/>
+          <stop offset="100%" stop-color="#8a5a10"/>
+        </linearGradient>
+        <linearGradient id="gHolder" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2e7da0"/>
+          <stop offset="100%" stop-color="#1a5a7a"/>
+        </linearGradient>
+        <linearGradient id="gVerified" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1e5272"/>
+          <stop offset="100%" stop-color="#12344e"/>
+        </linearGradient>
+        <linearGradient id="gGeneral" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a3044"/>
+          <stop offset="100%" stop-color="#0f1f2e"/>
+        </linearGradient>
+        <!-- Overlay shimmer per layer -->
+        <linearGradient id="shimmer" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="white" stop-opacity="0"/>
+          <stop offset="50%" stop-color="white" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ─── General (bottom) ─── -->
+      <polygon points="113,358 647,358 710,454 50,454" fill="url(#gGeneral)"/>
+      <polygon points="113,358 647,358 710,454 50,454" fill="url(#shimmer)"/>
+      <text x="380" y="397" text-anchor="middle"
+            fill="#e2e8f0" font-family="Inter,sans-serif" font-size="16" font-weight="700" letter-spacing="0.5">
+        General
+      </text>
+      <text x="380" y="418" text-anchor="middle"
+            fill="#7a99b0" font-family="Inter,sans-serif" font-size="12" font-weight="400">
+        Join the Discord
+      </text>
+
+      <!-- ─── Candle Verified ─── -->
+      <polygon points="170,272 590,272 644,354 116,354" fill="url(#gVerified)"/>
+      <polygon points="170,272 590,272 644,354 116,354" fill="url(#shimmer)"/>
+      <text x="380" y="307" text-anchor="middle"
+            fill="#e2e8f0" font-family="Inter,sans-serif" font-size="15" font-weight="700" letter-spacing="0.5">
+        Candle Verified
+      </text>
+      <text x="380" y="328" text-anchor="middle"
+            fill="#6e9ab5" font-family="Inter,sans-serif" font-size="12" font-weight="400">
+        Verify on Candle
+      </text>
+
+      <!-- ─── Candle Holder ─── -->
+      <polygon points="227,186 533,186 588,268 172,268" fill="url(#gHolder)"/>
+      <polygon points="227,186 533,186 588,268 172,268" fill="url(#shimmer)"/>
+      <text x="380" y="221" text-anchor="middle"
+            fill="#e2e8f0" font-family="Inter,sans-serif" font-size="15" font-weight="700" letter-spacing="0.5">
+        Candle Holder
+      </text>
+      <text x="380" y="242" text-anchor="middle"
+            fill="#8ec8e0" font-family="Inter,sans-serif" font-size="12" font-weight="400">
+        Buy &amp; hold $CNDL
+      </text>
+
+      <!-- ─── Believer ─── -->
+      <polygon points="283,100 477,100 531,182 229,182" fill="url(#gBeliever)"/>
+      <polygon points="283,100 477,100 531,182 229,182" fill="url(#shimmer)"/>
+      <text x="380" y="135" text-anchor="middle"
+            fill="#fef3c7" font-family="Inter,sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">
+        Believer
+      </text>
+      <text x="380" y="156" text-anchor="middle"
+            fill="#d4aa60" font-family="Inter,sans-serif" font-size="12" font-weight="400">
+        Mint the Believer NFT
+      </text>
+
+      <!-- ─── Elite (top) ─── -->
+      <polygon points="360,14 420,14 474,96 286,96" fill="url(#gElite)"/>
+      <polygon points="360,14 420,14 474,96 286,96" fill="url(#shimmer)"/>
+      <text x="380" y="47" text-anchor="middle"
+            fill="#1a1200" font-family="Inter,sans-serif" font-size="13" font-weight="800" letter-spacing="1">
+        👑 ELITE
+      </text>
+      <text x="380" y="66" text-anchor="middle"
+            fill="#5a3d00" font-family="Inter,sans-serif" font-size="11" font-weight="500">
+        Invitation only
+      </text>
+
+      <!-- Hairline dividers -->
+      <line x1="0" y1="97" x2="760" y2="97" stroke="#111827" stroke-width="4"/>
+      <line x1="0" y1="183" x2="760" y2="183" stroke="#111827" stroke-width="4"/>
+      <line x1="0" y1="269" x2="760" y2="269" stroke="#111827" stroke-width="4"/>
+      <line x1="0" y1="355" x2="760" y2="355" stroke="#111827" stroke-width="4"/>
+
+      <!-- Step labels on left side -->
+      <text x="92" y="56" text-anchor="end"
+            fill="#374151" font-family="Inter,sans-serif" font-size="10" font-weight="500">RING 5</text>
+      <text x="92" y="146" text-anchor="end"
+            fill="#374151" font-family="Inter,sans-serif" font-size="10" font-weight="500">RING 4</text>
+      <text x="92" y="232" text-anchor="end"
+            fill="#374151" font-family="Inter,sans-serif" font-size="10" font-weight="500">RING 3</text>
+      <text x="92" y="318" text-anchor="end"
+            fill="#374151" font-family="Inter,sans-serif" font-size="10" font-weight="500">RING 2</text>
+      <text x="92" y="410" text-anchor="end"
+            fill="#374151" font-family="Inter,sans-serif" font-size="10" font-weight="500">RING 1</text>
+
+    </svg>
+  </div>
+
+  <!-- Whale -->
+  <div class="whale-row">
+    <span>🐋 &nbsp;Whale Channel</span>
+    <div class="dot"></div>
+    <span class="qualifier">0.5%+ CNDL supply or $100k+ wallet · Auto-detected · Available at any ring</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="brand">
+      <div class="logo">C</div>
+      <span class="brand-name">Candle Elite &nbsp;·&nbsp; $CNDL</span>
+    </div>
+    <span class="tagline">The path is clear. Where are you?</span>
+  </div>
+
+</div>
+</body>
+</html>
