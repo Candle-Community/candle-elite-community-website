@@ -17,46 +17,40 @@ export async function fetchTokenData() {
   if (!heliusKey) return null;
 
   try {
-    const [supplyResult, topHoldersResult, priceRes] = await Promise.all([
-      // Accurate supply + decimals
+    const [supplyResult, topHoldersResult, priceRes, holderRes] = await Promise.all([
       rpc(heliusKey, "getTokenSupply", [CNDL_MINT]),
-      // Top 20 holders
       rpc(heliusKey, "getTokenLargestAccounts", [CNDL_MINT]),
-      // Price from Jupiter
-      fetch(`https://api.jup.ag/price/v2?ids=${CNDL_MINT}`, { next: { revalidate: 60 } }),
+      // DexScreener — free, no key, works for any Solana token
+      fetch(`https://api.dexscreener.com/latest/dex/tokens/${CNDL_MINT}`, {
+        next: { revalidate: 60 },
+      }),
+      // Helius token accounts for holder count
+      fetch(HELIUS_RPC(heliusKey), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0", id: "2",
+          method: "getTokenAccounts",
+          params: { mint: CNDL_MINT, limit: 1, options: { showZeroBalance: false } },
+        }),
+        next: { revalidate: 300 },
+      }),
     ]);
 
     const priceData = await priceRes.json();
+    const holderData = await holderRes.json();
 
     const decimals = supplyResult?.value?.decimals ?? 0;
     const supply = supplyResult?.value?.uiAmount ?? null;
-    // Jupiter v2 returns price as a string
-    const rawPrice = priceData?.data?.[CNDL_MINT]?.price;
-    const price = rawPrice != null ? parseFloat(rawPrice) : null;
     const topHolders = topHoldersResult?.value ?? [];
-
-    // Holder count via Helius getTokenAccounts (DAS)
-    const holderRes = await fetch(HELIUS_RPC(heliusKey), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        jsonrpc: "2.0", id: "2",
-        method: "getTokenAccounts",
-        params: { mint: CNDL_MINT, limit: 1, cursor: undefined, options: { showZeroBalance: false } },
-      }),
-      next: { revalidate: 300 },
-    });
-    const holderData = await holderRes.json();
     const holderCount = holderData?.result?.total ?? null;
 
-    return {
-      mint: CNDL_MINT,
-      supply,
-      decimals,
-      price,
-      holderCount,
-      topHolders: topHolders.slice(0, 10),
-    };
+    // DexScreener: pick the pair with highest liquidity
+    const pairs: { priceUsd?: string; liquidity?: { usd?: number } }[] = priceData?.pairs ?? [];
+    const bestPair = pairs.sort((a, b) => (b.liquidity?.usd ?? 0) - (a.liquidity?.usd ?? 0))[0];
+    const price = bestPair?.priceUsd ? parseFloat(bestPair.priceUsd) : null;
+
+    return { mint: CNDL_MINT, supply, decimals, price, holderCount, topHolders: topHolders.slice(0, 10) };
   } catch {
     return null;
   }
