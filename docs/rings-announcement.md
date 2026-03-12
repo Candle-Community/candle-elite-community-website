@@ -21,19 +21,19 @@ Everyone begins here.
 ✅ Ring 2 — Candle Verified
 Verify your Candle account and step inside.
 Unlocks verified-only channels and puts you on the path to holder status.
-→ Verify at candle.tv
+→ Verify at https://candle.tv/
 
 🔥 Ring 3 — Candle Holder
 Hold $CNDL. Simple as that.
 Unlocks holder-only alpha, early signals, and token-gated channels.
 This is where the real conversations start.
-→ Buy $CNDL
+→ Buy $CNDL at https://candle.tv/
 
 💎 Ring 4 — Believer
 Mint the Believer NFT and gain access to #1347239484864860161 — a private channel written by @andrew, who turned early conviction into life-changing wealth in 2013 and has since sat across the table from founders who've sold companies for 9 figures and raised from a16z, Founders Fund, and Sequoia.
 
 This isn't recycled CT takes. This is pattern recognition built over a decade of being in the room.
-→ Mint the Believer NFT
+→ Mint the Believer NFT at https://candle.tv/
 
 👑 Ring 5 — Elite (invitation only)
 The inner circle. Not bought — earned.
@@ -51,7 +51,7 @@ The path is clear.
 Each ring unlocks something the one below it doesn't.
 The question is how far you want to go.
 
-👉 Verify on Candle · Buy $CNDL · Mint Believer NFT
+👉 Verify on Candle · Buy $CNDL · Mint Believer NFT → https://candle.tv/ | Discord: https://discord.com/invite/candledottv
 
 🕯️ Candle — The launchpad built different.
 ```
@@ -155,8 +155,8 @@ the rings just got deeper 🕯️
 
 | Action | Link |
 |--------|------|
-| Verify on Candle | candle.tv |
-| Buy $CNDL | *(add DEX link)* |
-| Mint Believer NFT | *(add mint link)* |
-| Join Discord | *(add invite link)* |
+| Verify on Candle | https://candle.tv/ |
+| Buy $CNDL | https://candle.tv/ |
+| Mint Believer NFT | https://candle.tv/ |
+| Join Discord | https://discord.com/invite/candledottv |
 | Community Dashboard | *(add Vercel URL)* |
